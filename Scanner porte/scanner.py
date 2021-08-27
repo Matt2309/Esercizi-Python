@@ -1,6 +1,12 @@
+import json
 import socket
 
 OPEN_PORTS = [] #lista porte aperte
+
+def extract_json_data():
+    with open("F:\Desktop\Documenti\Esercitazioni coding\Python\Esercizi-Python/commons_ports.json", "r") as file: #r = sola lettura come file
+        data = json.load(file) #mettiamo in data il file json
+    print(data)
 
 def get_host_ip_addr(target): #converte il dominio in ip
     try:
@@ -10,7 +16,7 @@ def get_host_ip_addr(target): #converte il dominio in ip
     else: #altrimenti printo l'ip
         return ip_addr
 
-def scan_port(ip, port):
+def scan_port(ip, port): #effettua la connessione per vedere se è aperta o no
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #Iimposto il socket con ip ipv4 e tcp
     sock.settimeout(1.0) #imposto il timeout
     conn_status = sock.connect_ex((ip, port)) #0 --> connessione buon fine 1--> no
@@ -19,6 +25,7 @@ def scan_port(ip, port):
     sock.close() #chiudo la connessione 
 
 if __name__ == "__main__": #incomincia il programma --> come il main
+    extract_json_data()
     print("programma scritto per solo scopo educativo")
     target = input ("Inserire target: ") #dominio da provare
     ip_addr = get_host_ip_addr(target) #prende l'ip dal dominio e lo manda alla funzione per prendere il dominio dall ip
